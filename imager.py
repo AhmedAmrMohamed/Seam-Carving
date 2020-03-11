@@ -51,7 +51,7 @@ class Imager:
                 sp(b,i,gp(b,i+1))
                 # sp(b,a,(255,255,255))
 
-    def calcEnergy(self,pixelx,pixely):
+    def getEnergy(self,pixelx,pixely):
         gp = self.getpixel
         up = gp(pixelx  ,pixely-1)
         do = gp(pixelx  ,pixely+1)
