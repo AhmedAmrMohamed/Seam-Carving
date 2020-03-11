@@ -46,7 +46,7 @@ class Imager:
         width = self.w
         gp    = self.getpixel
         sp    = self.setpixel
-        for b,a in enumerate(seam):
+        for b,a in seam:
             for i in range(a,width-1):
                 sp(b,i,gp(b,i+1))
                 # sp(b,a,(255,255,255))
