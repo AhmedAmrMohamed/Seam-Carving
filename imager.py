@@ -19,24 +19,24 @@ class Imager:
         ''' save the img in path '''
         Image.fromarray(self.img).save(path)
     
-    def valid (self,pixelx,pixely):
-        validx = lambda x: True if x>0 and x < self.w else False
-        validy = lambda y: True if y>0 and y < self.h else False
-        return validx(pixelx) and validy(pixely)
+    def valid (self,pixelv,pixelh):
+        validv = lambda a: True if a>0 and a < self.h else False
+        validh = lambda a: True if a>0 and a < self.w else False
+        return validv(pixelv) and validh(pixelh)
     
-    def setpixel(self,pixelx,pixely,rgb):
+    def setpixel(self,pixelv,pixelh,rgb):
         ''' set the value of a pixel as [r,g,b] '''
         # np.put(self.img,[pixelx,pixely],[r,g,b])
         # np.put(self.img,[pixelx,pixely],[r,g,b])
-        self.img[pixelx,pixely,0] = rgb[0]
-        self.img[pixelx,pixely,1] = rgb[1]
-        self.img[pixelx,pixely,2] = rgb[2]
+        self.img[pixelv,pixelh,0] = rgb[0]
+        self.img[pixelv,pixelh,1] = rgb[1]
+        self.img[pixelv,pixelh,2] = rgb[2]
 
-    def getpixel(self,pixelx,pixely):
+    def getpixel(self,pixelv,pixelh):
         ''' get the value of a pixel '''
-        if not self.valid(pixelx,pixely):
+        if not self.valid(pixelv,pixelh):
             return [0,0,0]
-        return self.img[pixelx][pixely]
+        return self.img[pixelv][pixelh]
     
     def removeSeam(self,seam):
         ''' 
@@ -46,12 +46,14 @@ class Imager:
         width = self.w
         gp    = self.getpixel
         sp    = self.setpixel
-        for b,a in seam:
-            for i in range(a,width-1):
-                sp(b,i,gp(b,i+1))
-                # sp(b,a,(255,255,255))
+        for v,h in seam:
+            for i in range(h+1,width):
+                sp(v,i-1,gp(v,i-1))
 
-    def getEnergy(self,pixelx,pixely):
+
+    def getEnergy(self,pixelv,pixelh):
+        pixelx = pixelh
+        pixely = pixelv
         gp = self.getpixel
         up = gp(pixelx  ,pixely-1)
         do = gp(pixelx  ,pixely+1)
@@ -94,7 +96,7 @@ def test_setpixel2():
     ob = Imager(org)
     print(ob.h)
     for i in range(ob.w):
-            ob.setpixel(0,i,0,0,0)
+            ob.setpixel(0,i,[0,0,0])
     ob.close(new)
 def test_removeseam():
     ob = Imager(org)
@@ -113,6 +115,6 @@ def test_calcenergy():
 
 # test_open()
 #test_close()
-#test_setpixel2()
+test_setpixel2()
 #test_removeseam()
 # test_calcenergy()
