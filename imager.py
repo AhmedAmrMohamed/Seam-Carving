@@ -20,9 +20,9 @@ class Imager:
         Image.fromarray(self.img).save(path)
     
     def valid (self,pixelv,pixelh):
-        validv = lambda a: True if a>0 and a < self.h else False
-        validh = lambda a: True if a>0 and a < self.w else False
-        return validv(pixelv) and validh(pixelh)
+        validv = pixelv >=0 and pixelv < self.h
+        validh = pixelh >=0 and pixelh < self.w
+        return validv and validh
     
     def setpixel(self,pixelv,pixelh,rgb):
         ''' set the value of a pixel as [r,g,b] '''
@@ -74,6 +74,7 @@ class Imager:
 
 org  = 'imgs/surforg.jpeg'
 new  = 'imgs/surfnew.jpeg'
+low  = 'imgs/lowres.jpg'
 
 def test_open():
     ob = Imager(new)
@@ -93,10 +94,12 @@ def test_setpixel():
     print('new' , ob.getpixel(1,1) )
 
 def test_setpixel2():
-    ob = Imager(org)
+    ob = Imager(low)
     print(ob.h)
     for i in range(ob.w):
             ob.setpixel(0,i,[0,0,0])
+    for i in range(ob.h):
+            ob.setpixel(i,0,[255,255,255])
     ob.close(new)
 def test_removeseam():
     ob = Imager(org)
@@ -111,10 +114,27 @@ def test_calcenergy():
     for i in range(ob.w-1):
         for j in range(ob.h-1):
             print(ob.calcEnergy(j,i))
+def test_valid():
+    ob = Imager(low)
+    assert ob.valid(0,0)
+    assert not ob.valid(-1,0)
+    assert not ob.valid(0,-1)
 
+def test_getEnergy():
+    ob = Imager(low)
+    dx = [1,-1, 0, 0]
+    dy = [0, 0,-1,-1]
+    pixel = (10,10)
+    for v,h in zip(dy,dx):
+        print(v,h)
+        print(ob.getpixel(pixel[0]+v,pixel[1]+h))
+    print(ob.getEnergy(pixel[0],pixel[1]))
 
 # test_open()
 #test_close()
 test_setpixel2()
 #test_removeseam()
 # test_calcenergy()
+#test_getEnergy()
+# test_valid()
+
