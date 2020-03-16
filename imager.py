@@ -10,6 +10,9 @@ class Imager:
         self.table      = self.totable()
         self.entab      = self.buildEnergy()
 
+    def reset(self):
+        self.entab = self.buildEnergy()
+
     def totable(self):
         ''' convert the pick into a table of pixels '''
         print('converting to table...')
@@ -18,9 +21,10 @@ class Imager:
         print('converted.')
         return table
 
-    def close(self):
+    def close(self,table=None):
         ''' save the img in path '''
         print('closing...')
+        table = table if table else self.table
         copy = self.image.copy()
         for i in range(self.hs-1):
             for j in range(self.vs-1):
@@ -58,7 +62,11 @@ class Imager:
         return table
         
     def removeSeam(self,seam):
-        pass
+        print('removing seam...')
+        for x,y in enumerate(seam):
+            for j in range(y+1,self.hs):
+                self.table[j-1][x] = self.table[j][x]
+        self.close()
     
 
 from vars import *

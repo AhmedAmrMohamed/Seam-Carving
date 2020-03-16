@@ -4,8 +4,9 @@ import os
 class Core:
     def __init__(self,image):
         self.image = image
-    
+            
     def DP(self):
+        print('building dp...')
         img   = self.image
         ET    = img.entab
         VA    = self.image.validPixel
@@ -25,6 +26,7 @@ class Core:
         return table
 
     def buildseam(self,table):
+        print('building seam...')
         mi = vars.inf,0
         for i in range(self.image.hs):
             if mi[0] > table[i][0][0]:
@@ -44,7 +46,14 @@ class Core:
 
 
 
-# image = Imager(vars.org,'imgs/testdp.jpeg')
+image = Imager('imgs/testdp.jpeg','imgs/testdp.jpeg')
+ob = Core(image)
+for i in range(100):
+        print(i)
+        seam = ob.buildseam(ob.DP())
+        ob.image.removeSeam(seam)
+        
+
 # def test_dp():
     # ob = Core(image)
     # print('dp...')
