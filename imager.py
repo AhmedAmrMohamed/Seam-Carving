@@ -8,7 +8,6 @@ class Imager:
         self.hs,self.vs = self.image.size
         self.table      = self.totable()
         self.entab      = self.buildEnergy()
-        self.close(self.entab,destPath)
 
     def totable(self):
         ''' convert the pick into a table of pixels '''
@@ -54,54 +53,9 @@ class Imager:
         table = [[ self.getPixelEnergy((j,i))for i in range(self.vs)] for j in range(self.hs)]
         return table
         
-        
+    def removeSeam(self,seam):
+        pass
     
-    # def valid (self,pixelv,pixelh):
-        # validv = pixelv >=0 and pixelv < self.h
-        # validh = pixelh >=0 and pixelh < self.w
-        # return validv and validh
-    
-    # def setpixel(self,pixelv,pixelh,rgb):
-        # ''' set the value of a pixel as [r,g,b] '''
-        # self.img[pixelv,pixelh,0] = rgb[0]
-        # self.img[pixelv,pixelh,1] = rgb[1]
-        # self.img[pixelv,pixelh,2] = rgb[2]
-
-    # def getpixel(self,pixelv,pixelh):
-        # ''' get the value of a pixel '''
-        # if not self.valid(pixelv,pixelh):
-            # return (0,0,0)
-        # ret =  self.img[pixelv][pixelh]
-        # return tuple(map(int,(ret[0],ret[1],ret[2])))
-    
-    # def removeSeam(self,seam):
-        # ''' 
-        # remove the the pixels refered to by seam
-        # by shifting adjacent pixels into their place
-        # '''
-        # width = self.w
-        # gp    = self.getpixel
-        # sp    = self.setpixel
-        # for v,h in seam:
-            # for i in range(h+1,width):
-                # sp(v,i-1,gp(v,i-1))
-
-
-    # def getEnergy(self,pixelv,pixelh):
-        # dv = [ 0, 0,-1, 1]
-        # dh = [-1, 1, 0, 0]
-        # le,ri,do,up = ((pixelv+a,pixelh+b) for a,b in zip(dv,dh))
-        # le = self.getpixel(le[0],le[1])
-        # ri = self.getpixel(ri[0],ri[1])
-        # do = self.getpixel(do[0],do[1])
-        # up = self.getpixel(up[0],up[1])
-
-        # dh = ((a-b)**2 for a,b in zip(le,ri))
-        # dv = ((a-b)**2 for a,b in zip(up,do))
-
-        # return sum(dh)+sum(dv)
-        
-
 
 from vars import *
 
@@ -111,6 +65,5 @@ def test_toarray():
 def test_close():
     img.close(path+'testclose.jpg')
 def test_energy():
-    img = Imager(org,'imgs/ene.jpeg')
+    img = Imager(hed,'imgs/ene.jpeg')
 
-x=test_energy() 
