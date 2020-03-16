@@ -7,49 +7,56 @@ class Core:
     
     def DP(self):
         img   = self.image
-        GE    = self.image.getEnergy
-        VA    = self.image.valid
-        table = [[(0,0) for i in range(img.w)] for i in range(img.h)]
+        ET    = img.entab
+        VA    = self.image.validPixel
+        table = [[ (0,0)for i in range(img.vs)] for j in range(img.hs)]
         dh    = (-1,0,1)
-        for v in range(img.h-1,-1,-1):
-            for h in range(img.w):              
-                ge = GE(v,h)
+        for v in range(img.vs-1,-1,-1):
+            for h in range(img.hs):              
+                ge = ET[h][v]
                 mi = vars.inf,0
                 for sh in (-1,0,1):             
-                    if VA(v+1,h+sh):
-                        tm = table[v+1][h+sh][0]
+                    if VA((h+sh,v+1)):
+                        tm = table[h+sh][v+1][0]
                         if tm < mi[0]:
                             mi = tm,sh
                 if mi[0] < vars.inf:
-                    table[v][h] = ge+mi[0],mi[1]
+                    table[h][v] = ge+mi[0],mi[1]
         return table
 
     def buildseam(self,table):
         mi = vars.inf,0
-        for i in range(self.image.w):
-            print(table[0][i][0])
-            if mi[0] > table[0][i][0]:
-                mi = table[0][i][0],i
-        h = i
-        li = [(0,i)]
-        for v in range(1,self.image.h):
-            h += table[v][h][1]
-            li.append((v,h))
+        for i in range(self.image.hs):
+            if mi[0] > table[i][0][0]:
+                mi = table[i][0][0],i
+        h  = mi[1]
+        li = []
+        for i in range(0,self.image.vs-1):
+            try:
+                li.append(h)
+                h+= table[h][i][1]
+            except Exception as e:
+                print(e,i,h)
+                quit()
         return li
+        
 
 
-def test_dp(image):
-    image = Imager(image)
-    ob = Core(image)
-    print('dp...')
-    return ob.buildseam(ob.DP())
-x = test_dp('imgs/coloroneseam.jpeg')
-im = 'imgs/coloroneseam.jpeg'
-def test_colorseam(x,im):
-    image = Imager(im)
-    for a,b in x:
-        image.setpixel(a,b,[255,255,255])
-    image.close(im)
-test_colorseam(x,im)
+
+
+# image = Imager(vars.org,'imgs/testdp.jpeg')
+# def test_dp():
+    # ob = Core(image)
+    # print('dp...')
+    # return ob.buildseam(ob.DP())
+# x = test_dp()
+# def test_colorseam(x):
+    # for a,b in enumerate(x):
+        # try:
+            # image.setPixel((b,a),(255,255,255))
+        # except Exception as e:
+            # print(e,b,a)
+    # image.close()
+# test_colorseam(x)
 
 

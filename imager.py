@@ -4,6 +4,7 @@ class Imager:
     ''' handles the all the related image proceesing stuff'''
     def __init__(self,orgPath,destPath):
         self.orgPath    = orgPath
+        self.destPath   = destPath
         self.image      = Image.open(orgPath)
         self.hs,self.vs = self.image.size
         self.table      = self.totable()
@@ -17,18 +18,18 @@ class Imager:
         print('converted.')
         return table
 
-    def close(self,table,path):
+    def close(self):
         ''' save the img in path '''
         print('closing...')
         copy = self.image.copy()
         for i in range(self.hs-1):
             for j in range(self.vs-1):
                 try:
-                    pixel = table[i][j]
+                    pixel = self.table[i][j]
                 except Exception as ex:
                     print(f'{ex},{i},{j},{self.hs},{self.vs}')
                 copy.putpixel((i,j),pixel)
-        copy.save(path)
+        copy.save(self.destPath)
 
     def validPixel(self,pixel):
         a = pixel[0] >= 0 and pixel[0] < self.hs
@@ -39,6 +40,9 @@ class Imager:
         if not self.validPixel(pixel):
             return (0,0,0)
         return self.table[pixel[0]][pixel[1]]
+
+    def setPixel(self,pixel,color):
+        self.table[pixel[0]][pixel[1]] = color
 
     def getPixelEnergy(self,pixel):
         dv = [ 0, 0,-1, 1]
