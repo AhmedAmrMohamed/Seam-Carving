@@ -35,8 +35,9 @@ class Imager:
     def getpixel(self,pixelv,pixelh):
         ''' get the value of a pixel '''
         if not self.valid(pixelv,pixelh):
-            return [0,0,0]
-        return self.img[pixelv][pixelh]
+            return (0,0,0)
+        ret =  self.img[pixelv][pixelh]
+        return tuple(map(int,(ret[0],ret[1],ret[2])))
     
     def removeSeam(self,seam):
         ''' 
@@ -52,30 +53,22 @@ class Imager:
 
 
     def getEnergy(self,pixelv,pixelh):
-        pixelx = pixelh
-        pixely = pixelv
-        gp = self.getpixel
-        up = gp(pixelx  ,pixely-1)
-        do = gp(pixelx  ,pixely+1)
-        ri = gp(pixelx+1,pixely  )
-        le = gp(pixelx-1,pixely  )
+        dv = [ 0, 0,-1, 1]
+        dh = [-1, 1, 0, 0]
+        le,ri,do,up = ((pixelv+a,pixelh+b) for a,b in zip(dv,dh))
+        le = self.getpixel(le[0],le[1])
+        ri = self.getpixel(ri[0],ri[1])
+        do = self.getpixel(do[0],do[1])
+        up = self.getpixel(up[0],up[1])
 
-        upr,upg,upb = map(int,(up[0],up[1],up[2]))
-        dor,dog,dob = map(int,(do[0],do[1],do[2]))
-        rir,rig,rib = map(int,(ri[0],ri[1],ri[2]))
-        ler,leg,leb = map(int,(le[0],le[1],le[2]))
-        
-        dv = (upr-dor)**2 + (upg-dog)**2 + (upb-dob)**2
-        dh = (rir-ler)**2 + (rig-leg)**2 + (rib-leb)**2
-        
-        return dv+dh
+        dh = ((a-b)**2 for a,b in zip(le,ri))
+        dv = ((a-b)**2 for a,b in zip(up,do))
+
+        return sum(dh)+sum(dv)
         
 
 
-org  = 'imgs/surforg.jpeg'
-new  = 'imgs/surfnew.jpeg'
-low  = 'imgs/lowres.jpg'
-
+from vars import *
 def test_open():
     ob = Imager(new)
     print(len(ob.img[0]))
@@ -121,20 +114,18 @@ def test_valid():
     assert not ob.valid(0,-1)
 
 def test_getEnergy():
-    ob = Imager(low)
-    dx = [1,-1, 0, 0]
-    dy = [0, 0,-1,-1]
-    pixel = (10,10)
-    for v,h in zip(dy,dx):
-        print(v,h)
-        print(ob.getpixel(pixel[0]+v,pixel[1]+h))
-    print(ob.getEnergy(pixel[0],pixel[1]))
+    ob = Imager(muf)
+    sv = Imager('imgs/en.jpeg')
+    for i in range(ob.w):
+        for j in range(ob.h):
+            sv.setpixel(j,i,[ob.getEnergy(j,i),0,0])
+    sv.close('imgs/en.jpeg')
 
 # test_open()
 #test_close()
-test_setpixel2()
+# test_setpixel2()
 #test_removeseam()
 # test_calcenergy()
-#test_getEnergy()
+test_getEnergy()
 # test_valid()
 

@@ -11,44 +11,45 @@ class Core:
         VA    = self.image.valid
         table = [[(0,0) for i in range(img.w)] for i in range(img.h)]
         dh    = (-1,0,1)
-        for h in range(img.w):
-            for v in range(1,img.h):
-                mi = vars.inf
-                for sh in dh:
-                    nh = h+sh
-                    if VA(v-1,nh):
-                        t = GE(v-1,nh)
-                        if t < mi:
-                            mi = t
-                            table[v][h] = mi,sh
+        for v in range(img.h-1,-1,-1):
+            for h in range(img.w):              
+                ge = GE(v,h)
+                mi = vars.inf,0
+                for sh in (-1,0,1):             
+                    if VA(v+1,h+sh):
+                        tm = table[v+1][h+sh][0]
+                        if tm < mi[0]:
+                            mi = tm,sh
+                if mi[0] < vars.inf:
+                    table[v][h] = ge+mi[0],mi[1]
         return table
 
     def buildseam(self,table):
-        h = 0
-        mx = 0
-        hi = self.image.h
-        for e,i in enumerate(table[hi-1]):
-            if i[0] > mx:
-                h = e
-        li = []
-        for v in range(hi-1,-1,-1):
+        mi = vars.inf,0
+        for i in range(self.image.w):
+            print(table[0][i][0])
+            if mi[0] > table[0][i][0]:
+                mi = table[0][i][0],i
+        h = i
+        li = [(0,i)]
+        for v in range(1,self.image.h):
+            h += table[v][h][1]
             li.append((v,h))
-            h+= table[v][h][1]
         return li
 
 
-image= Imager(vars.muf)
-def test_dp():
+def test_dp(image):
+    image = Imager(image)
     ob = Core(image)
     print('dp...')
     return ob.buildseam(ob.DP())
-
-x = test_dp()
-
-def test_colorseam(x):
+x = test_dp('imgs/coloroneseam.jpeg')
+im = 'imgs/coloroneseam.jpeg'
+def test_colorseam(x,im):
+    image = Imager(im)
     for a,b in x:
         image.setpixel(a,b,[255,255,255])
-    image.close('imgs/coloroneseam.jpeg')
-test_colorseam(x)
+    image.close(im)
+test_colorseam(x,im)
 
 
