@@ -4,17 +4,17 @@ This is my implementation to the [seam carving for content-aware image resizing]
 
 The following photos show the result of running this code on the an image for 0, 124, 300, 500, 770, 900 times.
 
-![drag_img](/home/ahmed/Documents/dev/scca/imgs/ball/ball.jpg)
+![0](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/ball/ball.jpg)
 
-![drag_img](/home/ahmed/Documents/dev/scca/imgs/ball/124.jpg)
+![124](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/ball/124.jpg)
 
-![drag_img](/home/ahmed/Documents/dev/scca/imgs/ball/300.jpg)
+![300](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/ball/300.jpg)
 
-![drag_img](/home/ahmed/Documents/dev/scca/imgs/ball/500.jpg)
+![500](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/ball/500.jpg)
 
-![drag_img](/home/ahmed/Documents/dev/scca/imgs/ball/770.jpg)
+![770](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/ball/770.jpg)
 
-![drag_img](/home/ahmed/Documents/dev/scca/imgs/ball/900.jpg)
+![900](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/ball/900.jpg)
 
 ### Anatomy
 
