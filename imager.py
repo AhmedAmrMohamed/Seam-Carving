@@ -66,7 +66,10 @@ class Imager:
         for x,y in enumerate(seam):
             for j in range(y+1,self.hs):
                 self.table[j-1][x] = self.table[j][x]
+        self.hs -=1 
+        self.reset()
         self.close()
+        
     
 
 from vars import *
