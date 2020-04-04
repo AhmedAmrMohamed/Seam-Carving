@@ -72,13 +72,13 @@ class Imager:
         
     
 
-from vars import *
+# from vars import *
 
 # img = Imager(org)
-def test_toarray():
-    return img.toarray()
-def test_close():
-    img.close(path+'testclose.jpg')
-def test_energy():
-    img = Imager(hed,'imgs/ene.jpeg')
+# def test_toarray():
+    # return img.toarray()
+# def test_close():
+    # img.close(path+'testclose.jpg')
+# def test_energy():
+    # img = Imager(hed,'imgs/ene.jpeg')
 

@@ -46,13 +46,7 @@ class Core:
 
 
 
-image = Imager('imgs/hs.jpeg','imgs/hs.jpeg')
-ob = Core(image)
-for i in range(300):
-        print(i)
-        seam = ob.buildseam(ob.DP())
-        ob.image.removeSeam(seam)
-        
+       
 
 # def test_dp():
     # ob = Core(image)
