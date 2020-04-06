@@ -21,6 +21,7 @@ def main():
         print(i)
         seam = build(dp())
         remove(seam)
+    imob.crop(loo)
  
 main()
         
