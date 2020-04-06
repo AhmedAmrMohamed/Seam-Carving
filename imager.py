@@ -69,8 +69,11 @@ class Imager:
         self.hs -=1 
         self.reset()
         self.close()
-        
-    
+
+    def crop(self,wid):
+        im  = Image.open(self.destPath)        
+        im1 = im.crop((0,0,self.hs-wid,self.vs)) 
+        im1.save(self.destPath)
 
 # from vars import *
 
