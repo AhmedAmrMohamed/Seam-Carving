@@ -2,6 +2,8 @@
 
 This is my implementation to the [seam carving for content-aware image resizing](https://perso.crans.org/frenoy/matlab2012/seamcarving.pdf).  The Seam carving Algorithm aims to size down images without distorting the main objects as much as possible in a effective way.
 
+### Examples
+
 The following photos show the result of running this code on the an image for 0, 124, 300, 500, 770, 900 times.
 
 ![0](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/ball/ball.jpg)
@@ -15,6 +17,12 @@ The following photos show the result of running this code on the an image for 0,
 ![770](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/ball/770.jpg)
 
 ![900](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/ball/900.jpg)
+
+another example :
+
+![original ](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/snow/snow.jpg))
+
+ ![200](https://github.com/theunderd0g/Seam-Carving/blob/master/imgs/snow/200.jpg)
 
 ### Anatomy
 
